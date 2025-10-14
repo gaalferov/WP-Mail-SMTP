@@ -78,6 +78,9 @@ class Options {
 			'api_key',
 			'has_pro_plan',
 		],
+		'mandrill'                 => [
+			'api_key',
+		],
 		'sendgrid'                 => [
 			'api_key',
 			'domain',
@@ -176,6 +179,7 @@ class Options {
 		'mailgun',
 		'mailjet',
 		'mailersend',
+		'mandrill',
 		'outlook',
 		'postmark',
 		'sendgrid',
@@ -933,6 +937,17 @@ class Options {
 				}
 				break; // phpcs:ignore WPForms.Formatting.Switch.AddEmptyLineBefore
 
+			// phpcs:ignore WPForms.Formatting.Switch.AddEmptyLineBefore
+			case 'mandrill':
+				// phpcs:ignore WPForms.Formatting.Switch.AddEmptyLineBefore
+				if ( $key === 'api_key' ) {
+					/** @noinspection PhpUndefinedConstantInspection */ // phpcs:ignore Generic.Commenting.DocComment.MissingShort
+					$return = $this->is_const_defined( $group, $key ) ? WPMS_MANDRILL_API_KEY : $value;
+				}
+
+				// phpcs:ignore WPForms.Formatting.Switch.RemoveEmptyLineBefore
+				break;
+
 			case 'alert_whatsapp':
 				switch ( $key ) { // phpcs:ignore WPForms.Formatting.Switch.AddEmptyLineBefore
 					case 'connections':
@@ -1365,6 +1380,17 @@ class Options {
 						break;
 				}
 				break; // phpcs:ignore WPForms.Formatting.Switch.AddEmptyLineBefore
+
+			case 'mandrill': // phpcs:ignore PSR2.ControlStructures.SwitchDeclaration.BodyOnNextLineCASE
+
+				switch ( $key ) {
+					case 'api_key':
+						$return = defined( 'WPMS_MANDRILL_API_KEY' ) && WPMS_MANDRILL_API_KEY;
+						break;
+				}
+
+				// phpcs:ignore WPForms.Formatting.Switch.AddEmptyLineBefore
+				break;
 		}
 
 		return apply_filters( 'wp_mail_smtp_options_is_const_defined', $return, $group, $key );
